@@ -1,5 +1,5 @@
 <script setup>
-import MyEvent from './components/AmazingCalculator.vue'
+import MyEvent from './components/AccordionComponent.vue'
 
 </script>
 

@@ -1,5 +1,5 @@
 <script setup>
-import MyEvent from './components/AccordionComponent.vue'
+import MyEvent from './components/FormValidation.vue'
 
 </script>
 

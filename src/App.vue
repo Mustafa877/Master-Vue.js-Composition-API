@@ -1,5 +1,5 @@
 <script setup>
-import MyEvent from './components/RandomQuoteGenerator.vue'
+import MyEvent from './components/AmazingCalculator.vue'
 
 </script>
 

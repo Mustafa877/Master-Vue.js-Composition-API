@@ -27,12 +27,23 @@ const displayClass = computed(() => {
 const clearDisplay = () => {
   display.value = "0";
 };
+
+const handleKeydown = (event) => {
+  const key = event.key;
+  if (!isNaN(key) || key === "." || "+-*/".includes(key)) {
+    appendToDisplay(key);
+  } else if (key === "Enter") {
+    calculate();
+  } else if (key === "Escape") {
+    clearDisplay();
+  }
+};
 </script>
 
 <template>
   <div>
     <div class="calculator">
-      <input v-model="display" :class="displayClass" readonly />
+      <input v-model="display" :class="displayClass" readonly @keydown="handleKeydown" />
 
       <div class="buttons">
         <button @click="appendToDisplay('7')">7</button>
@@ -60,7 +71,6 @@ const clearDisplay = () => {
     </div>
   </div>
 </template>
-
 <style>
 input {
   padding: 10px 20px;

@@ -14,16 +14,13 @@ const addTask = () => {
 const removeTask = (index) => {
   tasks.value.splice(index, 1);
 };
+
 </script>
 
 <template>
   <div class="todo-app">
     <div class="task-input">
-      <input
-        v-model="newTask"
-        @keyup.enter="addTask"
-        placeholder="Add a new task"
-      />
+      <input v-model="newTask" @keyup.enter="addTask" placeholder="Add a new task" />
       <button @click="addTask">Add To Do</button>
     </div>
 

@@ -1,35 +1,29 @@
-# vue-course
+# Vue.js Application
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a Vue.js application showcasing various components and functionalities.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Navigation using Vue Router
+- Dynamic component rendering
+- Reactive state management with Vue's `ref` and `computed`
+- Scoped CSS for styling
 
-## Customize configuration
+## Components
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- **Home**: Basic landing page.
+- **AmazingCalculator**: A calculator component.
+- **PasswordGenerator**: Generate random passwords.
+- **AccordionComponent**: An accordion UI component.
+- **FormValidation**: Form validation functionality.
+- **ProgressSteps**: Component for displaying progress steps.
+- **GithubUsersSearch**: Search GitHub users.
+- **TodoList**: Simple todo list application.
+- **DadJokes**: Display random dad jokes.
+- **RandomQuoteGenerator**: Generate random quotes.
+- **WikiComponent**: Search Wikipedia articles.
 
-## Project Setup
+## Installation
 
-```sh
-npm install
-```
+1. Clone the repository:
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```

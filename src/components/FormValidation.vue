@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref, computed } from "vue";
 
@@ -26,43 +27,54 @@ const submitForm = () => {
   }
 };
 </script>
-
 <template>
-  <div>
-    <form @submit.prevent="submitForm" class="custom-form">
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input v-model="formData.name" type="text" id="name" />
-        <span v-if="!isNameValid" class="error">Name is required</span>
-      </div>
+  <div class="centered-form">
+    <div class="card">
+      <form @submit.prevent="submitForm" class="custom-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input v-model="formData.name" type="text" id="name" />
+          <span v-if="!isNameValid" class="error">Name is required</span>
+        </div>
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input v-model="formData.email" type="email" id="email" />
-        <span v-if="!isEmailValid" class="error"
-          >Please enter a valid email address</span
-        >
-      </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input v-model="formData.email" type="email" id="email" />
+          <span v-if="!isEmailValid" class="error">Please enter a valid email address</span>
+        </div>
 
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input v-model="formData.password" type="password" id="password" />
-        <span v-if="!isPasswordValid" class="error"
-          >Password must be at least 8 characters</span
-        >
-      </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input v-model="formData.password" type="password" id="password" />
+          <span v-if="!isPasswordValid" class="error">Password must be at least 8 characters</span>
+        </div>
 
-      <button type="submit" :disabled="!isFormValid" class="submit-button">
-        Submit
-      </button>
-    </form>
+        <button type="submit" :disabled="!isFormValid" class="submit-button">Submit</button>
+      </form>
+    </div>
   </div>
 </template>
 
+
+
 <style scoped>
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  max-width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .custom-form {
-  max-width: 400px;
-  margin: 0 auto;
+  margin-bottom: 0;
 }
 
 .form-group {
@@ -76,7 +88,7 @@ label {
 }
 
 input {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;

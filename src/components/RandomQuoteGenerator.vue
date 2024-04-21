@@ -1,50 +1,50 @@
+
 <script setup>
-import { ref, onMounted } from "vue";
-
-const quotes = ref([
-  {
-    text: "The only way to do great work is to love what you do.",
-    author: "Steve Jobs",
-  },
-  {
-    text: "Believe you can and you're halfway there.",
-    author: "Theodore Roosevelt",
-  },
-  {
-    text: "Life is what happens when you're busy making other plans.",
-    author: "John Lennon",
-  },
-]);
-
+import { ref } from "vue";
 const currentQuote = ref({ text: "", author: "" });
 
-const getRandomQuote = () => {
-  const randomIndex = Math.floor(Math.random() * quotes.value.length);
-  currentQuote.value = quotes.value[randomIndex];
+const getRandomQuote = async () => {
+  try {
+    const response = await fetch("https://type.fit/api/quotes");
+    const data = await response.json();
+    const randomIndex = Math.floor(Math.random() * data.length);
+    currentQuote.value = data[randomIndex];
+  } catch (error) {
+    console.error("Error fetching quotes:", error);
+  }
 };
 
-// Get a random quote when the component is mounted
-onMounted(getRandomQuote);
+getRandomQuote();
 </script>
 
 <template>
-  <div class="quote-generator">
-    <h1 class="app-title">Random Quote Generator</h1>
+  <div class="centered-form">
+    <div class="quote-generator">
+      <h1 class="app-title">Random Quote Generator</h1>
 
-    <blockquote class="quote-container">
-      <p>{{ currentQuote.text }}</p>
-      <cite>{{ currentQuote.author }}</cite>
-    </blockquote>
+      <blockquote class="quote-container">
+        <p>{{ currentQuote.text }}</p>
+        <cite>{{ currentQuote.author }}</cite>
+      </blockquote>
 
-    <button @click="getRandomQuote" class="quote-button">
-      Get Random Quote
-    </button>
+      <button @click="getRandomQuote" class="quote-button">
+        Get Random Quote
+      </button>
+    </div>
   </div>
 </template>
 
+
+
 <style scoped>
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .quote-generator {
-  max-width: 400px;
+  max-width: 100%;
   margin: 50px auto;
   padding: 20px;
   text-align: center;
@@ -80,14 +80,17 @@ cite {
 .quote-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #3498db;
+  background-color: #4caf50;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Add transition */
 }
 
+ 
 .quote-button:hover {
-  background-color: #2980b9;
+  background-color: #45a049;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 </style>

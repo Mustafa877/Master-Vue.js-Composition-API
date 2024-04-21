@@ -41,6 +41,7 @@ const handleKeydown = (event) => {
 </script>
 
 <template>
+  <div class="centered-form">
   <div class="calculator">
     <input v-model="display" :class="displayClass" readonly @keydown="handleKeydown" />
 
@@ -68,9 +69,16 @@ const handleKeydown = (event) => {
 
     <button @click="clearDisplay" class="clear-button">C</button>
   </div>
+  </div>
 </template>
 
 <style scoped>
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .calculator {
   max-width: 300px;
   margin: 0 auto;

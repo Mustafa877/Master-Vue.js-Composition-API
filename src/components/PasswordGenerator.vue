@@ -1,95 +1,121 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
-const formData = ref({
-  name: "",
-  email: "",
-  password: "",
-});
+const passwordLength = ref(12);
+const includeUppercase = ref(true);
+const includeNumbers = ref(true);
+const includeSymbols = ref(true);
+const generatedPassword = ref("");
+const copiedToClipboard = ref(false);
 
-const isNameValid = computed(() => formData.value.name.trim() !== "");
-const isEmailValid = computed(() =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email)
-);
-const isPasswordValid = computed(() => formData.value.password.length >= 8);
+const generatePassword = () => {
+  const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+  const uppercaseChars = includeUppercase.value
+    ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    : "";
+  const numberChars = includeNumbers.value ? "0123456789" : "";
+  const symbolChars = includeSymbols.value ? "!@#$%^&*()_+[]{}|;:,.<>?/~`" : "";
 
-const isFormValid = computed(
-  () => isNameValid.value && isEmailValid.value && isPasswordValid.value
-);
+  const allChars = lowercaseChars + uppercaseChars + numberChars + symbolChars;
 
-const submitForm = () => {
-  if (isFormValid.value) {
-    // Perform form submission logic here
-    console.log("Form submitted!", formData.value);
-  } else {
-    console.log("Form is invalid. Please check the fields.");
+  let password = "";
+  for (let i = 0; i < passwordLength.value; i++) {
+    const randomIndex = Math.floor(Math.random() * allChars.length);
+    password += allChars[randomIndex];
   }
+
+  generatedPassword.value = password;
+};
+
+const copyToClipboard = () => {
+  navigator.clipboard.writeText(generatedPassword.value);
+  copiedToClipboard.value = true;
+  setTimeout(() => {
+    copiedToClipboard.value = false;
+  }, 2000); // Reset copiedToClipboard after 2 seconds
 };
 </script>
 
+
+
 <template>
-  <div>
-    <form @submit.prevent="submitForm" class="custom-form">
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input v-model="formData.name" type="text" id="name" />
-        <span v-if="!isNameValid" class="error">Name is required</span>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input v-model="formData.email" type="email" id="email" />
-        <span v-if="!isEmailValid" class="error"
-          >Please enter a valid email address</span
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input v-model="formData.password" type="password" id="password" />
-        <span v-if="!isPasswordValid" class="error"
-          >Password must be at least 8 characters</span
-        >
-      </div>
-
-      <button type="submit" :disabled="!isFormValid" class="submit-button">
-        Submit
-      </button>
-    </form>
+  <div class="password-generator-container">
+    <h2 class="password-generator-title">Password Generator</h2>
+    <div class="input-container">
+      <label for="length">Password Length:</label>
+      <input
+        type="number"
+        id="length"
+        v-model="passwordLength"
+        min="4"
+        max="32"
+        class="input-field"
+      />
+    </div>
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" v-model="includeUppercase" />
+        Include Uppercase
+      </label>
+      <label>
+        <input type="checkbox" v-model="includeNumbers" />
+        Include Numbers
+      </label>
+      <label>
+        <input type="checkbox" v-model="includeSymbols" />
+        Include Symbols
+      </label>
+    </div>
+    <button @click="generatePassword" class="generate-button">
+      Generate Password
+    </button>
+    <div v-if="generatedPassword" class="generated-password">
+      <strong>Your Password:</strong> {{ generatedPassword }}
+      <button @click="copyToClipboard" class="copy-button">Copy</button>
+    </div>
+    <div v-if="copiedToClipboard" class="copied-message">Password copied to clipboard!</div>
   </div>
 </template>
 
+
+
 <style scoped>
-.custom-form {
+.password-generator-container {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 50px auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.form-group {
+.password-generator-title {
+  font-size: 24px;
+  color: #333;
   margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+.input-container {
+  margin-bottom: 20px;
 }
 
-input {
+.input-field {
   width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+  padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.error {
-  color: #e74c3c;
-  font-size: 14px;
-  margin-top: 5px;
+.checkbox-container {
+  margin-bottom: 20px;
 }
 
-.submit-button {
+.checkbox-container label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.generate-button {
   padding: 10px 15px;
   font-size: 16px;
   background-color: #3498db;
@@ -99,8 +125,40 @@ input {
   cursor: pointer;
 }
 
-.submit-button:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
+.generate-button:hover {
+  background-color: #2980b9;
+}
+
+.generated-password {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+}
+
+.copy-button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: #45a049;
+}
+
+.copied-message {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

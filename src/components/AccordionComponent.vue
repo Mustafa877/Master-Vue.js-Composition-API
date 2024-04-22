@@ -32,9 +32,9 @@ const toggleAccordion = (index) => {
 
 <template>
   <div class="accordion-container">
-    <div v-for="(item, index) in items" :key="index" class="accordion">
+    <div v-for="(item, index) in items" :key="index" class="accordion" :class="{ 'open': item.open }">
       <div class="accordion-header" @click="toggleAccordion(index)">
-        {{ item.title }}
+        <span class="title">{{ item.title }}</span>
         <span class="arrow-icon">{{ item.open ? "▼" : "▶" }}</span>
       </div>
       <div v-show="item.open" class="accordion-content">
@@ -48,18 +48,31 @@ const toggleAccordion = (index) => {
 .accordion-container {
   max-width: 600px;
   margin: 50px auto;
+  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .accordion {
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.accordion:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.accordion.open .accordion-header {
+  background-color: #6c757d;
 }
 
 .accordion-header {
-  background-color: #34db7f;
-  color: #030303;
+  background-color: #495057;
+  color: #fff;
   padding: 15px;
   cursor: pointer;
   display: flex;
@@ -67,8 +80,24 @@ const toggleAccordion = (index) => {
   align-items: center;
 }
 
+.accordion-header:hover {
+  background-color: #343a40;
+}
+
+.title {
+  flex: 1;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
 .arrow-icon {
   font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.accordion.open .arrow-icon {
+  transform: rotate(90deg);
 }
 
 .accordion-content {
@@ -77,9 +106,12 @@ const toggleAccordion = (index) => {
   border-top: 1px solid #ddd;
   background-color: #f9f9f9;
   color: #333;
+  transition: max-height 0.3s ease;
+  overflow: hidden;
 }
 
-.accordion-content[style] {
+.accordion.open .accordion-content {
   display: block;
+  max-height: 500px;  
 }
 </style>

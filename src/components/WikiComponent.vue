@@ -90,14 +90,13 @@ const goToPage = (page) => {
           </h3>
           <p class="result-snippet" v-html="result.snippet"></p>
         </div>
-      </div>
-
-      <!-- Pagination controls -->
+      </div>     
       <div class="pagination">
         <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Previous</button>
         <span>{{ currentPage }} / {{ totalPages }}</span>
         <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
       </div>
+
     </div>
   </div>
 </template>
